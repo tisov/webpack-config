@@ -1,6 +1,8 @@
-let path = require('path')
-let MiniCssExtractPlugin = require('mini-css-extract-plugin')
-let HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path'),
+  MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  CopyWebpackPlugin = require('copy-webpack-plugin')
+
 
 module.exports = {
   entry: './src/main.js',
@@ -27,6 +29,10 @@ module.exports = {
           },
           'css-loader'
         ]
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        use: 'file-loader'
       }
     ]
   },
@@ -36,6 +42,11 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html'
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: './public/favicon.ico'
+      }
+    ])
   ]
 }
